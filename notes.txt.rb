@@ -1,10 +1,27 @@
 # Just for notes
 
+#Final
+#Every Rule will be translated like:
+#Rule.new(A, 50, 3, 120)
+normal_price = 50
+amount_offer = 3 #could never be 0
+price_offer = 120
+products = "AAAA"
+na = 7
+
+modulo = na % amount_offer
+in_offer = na - modulo
+price = (in_offer / amount_offer) * price_offer + modulo * normal_price
+p price
+
+#EndFinal
+
 class Rules
   def initialize(product, normal_price, amount_offer=nil, price_offer=nil)
     @product = product
-    @amount = amount
-    @price = offer
+    @normal_price = normal_price
+    @amount_offer = amount_offer
+    @price_offer = price_offer
   end
 
   private
@@ -46,3 +63,6 @@ M = 1
 2M = 1.5
 3M = 1.5
 2M = 1.2
+
+
+bundle install --path .bundle

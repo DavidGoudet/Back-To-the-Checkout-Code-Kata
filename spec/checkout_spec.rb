@@ -1,6 +1,13 @@
 # frozen_string_literal: true
+require_relative '../check_out'
 
-describe Checkout do
+describe CheckOut do
+  def price(goods, rules)
+    co = CheckOut.new(rules)
+    goods.split(//).each { |item| co.scan(item) }
+    co.total
+  end
+
   let (:simple_rules) { 
     [
       {product: 'A', normal_price: 50, amount_offer: 3, price_offer: 130},
@@ -28,26 +35,26 @@ describe Checkout do
   let (:single_product) { 'AAA' }
 
   context "when the input is correct" do
-    it "returns the correct output"
-      expect(Checkout.new(simple_rules).total).to eq(130)
+    it "returns the correct output" do
+      expect(price(single_product, simple_rules)).to eq(130)
     end
   end
 
   context "when the rule includes an amount_offer equals to 0" do
-    it "returns an error because of zero division"
-      expect(Checkout.new(zero_division).total).to raise_error(ZeroDivisionError)
+    it "returns an error because of zero division" do
+      expect(CheckOut.new(zero_division).total).to raise_error(ZeroDivisionError)
     end
   end
 
   context "when the rule includes a string instead of a number" do
-    it "returns an error"
-      expect(Checkout.new(string_not_number).total).to raise_error(ClassError)
+    it "returns an error" do
+      expect(CheckOut.new(string_not_number).total).to raise_error(ClassError)
     end
   end
 
   context "when the product doesn't exist" do
-    it "returns an error"
-      expect(Checkout.new(non_existing).total).to raise_error(ClassError)
+    it "returns an error" do
+      expect(CheckOut.new(non_existing).total).to raise_error(ClassError)
     end
   end
 end
