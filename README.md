@@ -1,8 +1,8 @@
 # Back to the Checkout
 
-This app uses Ruby to calculate the prices of a list of products being checkout in a supermarket with a given set of pricing rules.
+This app uses Ruby to calculate the prices of a list of products being checkout in a supermarket with a given set of pricing rules.  
 Based on the Code Kata: http://codekata.com/kata/kata09-back-to-the-checkout/
-Requirements:
+## 	Requirements:
 ```
 Ruby 3.0.0
 RSpec
@@ -30,6 +30,6 @@ rspec -fd
 The -fd flag will output the results in a readable format.
 
 ## Classes
-*CheckOut*
-*ProductCalculator*
+*CheckOut*  
+*ProductCalculator*  
 *InputValidator*
