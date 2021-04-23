@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
-class PriceCalculator
-  def initialize(rules, product, amount)
+class ProductCalculator
+  def initialize(rules, product, amount = 0)
     @rules = rules
     @product = product
     @amount = amount
   end
 
   def calculate_price
-    product_rules = @rules.find {|rule| rule[:product] == @product }
+    product_rules = product_rules_extractor
     
     if product_rules.key?(:amount_offer) && product_rules.key?(:price_offer)
       calculate_price_with_offer product_rules
     else
       return @amount * product_rules[:normal_price]
     end
+  end
+
+  def product_rules_extractor
+    @rules.find {|rule| rule[:product] == @product }
   end
 
   private

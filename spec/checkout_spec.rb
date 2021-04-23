@@ -32,6 +32,18 @@ describe CheckOut do
     ]
   }
 
+  let (:no_normal_price) { 
+    [
+      {product: 'A', amount_offer: 2, price_offer: 130},
+    ]
+  }
+
+  let (:no_price_offer) { 
+    [
+      {product: 'A', normal_price: 50, amount_offer: 2},
+    ]
+  }
+
   let (:single_product) { 'AAA' }
   let (:mixed_products) { 'AAABBAACDCA' }
   let (:zero_products) { '' }
@@ -58,19 +70,31 @@ describe CheckOut do
 
   context "when the rule includes an amount_offer equals to 0" do
     it "returns an error because of zero division" do
-      expect{ CheckOut.new(zero_division) }.to raise_error(ZeroDivisionError, "The amount of the offer can't be 0")
+      expect{ price(mixed_products, zero_division) }.to raise_error(ArgumentError)
     end
   end
 
   context "when the rule includes a string instead of a number" do
-    it "returns an error" do
-      expect(CheckOut.new(string_not_number).total).to raise_error(ClassError)
+    it "returns an ArgumentError" do
+      expect{ price(mixed_products, string_not_number) }.to raise_error(ArgumentError)
     end
   end
 
   context "when the product doesn't exist" do
-    it "returns an error" do
-      expect(CheckOut.new(non_existing).total).to raise_error(ClassError)
+    it "returns an IndexError" do
+      expect{ price(mixed_products, non_existing) }.to raise_error(IndexError)
+    end
+  end
+
+  context "when there is no normal price" do
+    it "returns an ArgumentError" do
+      expect{ price(mixed_products, no_normal_price) }.to raise_error(ArgumentError)
+    end
+  end
+
+  context "when there's amount offer without price offer" do
+    it "returns an ArgumentError" do
+      expect{ price(mixed_products, no_price_offer) }.to raise_error(ArgumentError)
     end
   end
 end
