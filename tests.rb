@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'test/unit'
-require 'checkout.rb'
+require_relative 'check_out.rb'
 
 class TestPrice < Test::Unit::TestCase
 

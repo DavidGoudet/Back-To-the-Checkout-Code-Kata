@@ -9,6 +9,17 @@ class PriceCalculator
 
   def calculate_price
     product_rules = @rules.find {|rule| rule[:product] == @product }
+    
+    if product_rules.key?(:amount_offer) && product_rules.key?(:price_offer)
+      calculate_price_with_offer product_rules
+    else
+      return @amount * product_rules[:normal_price]
+    end
+  end
+
+  private
+
+  def calculate_price_with_offer(product_rules)
     amount_offer = product_rules[:amount_offer]
     price_offer = product_rules[:price_offer]
     normal_price = product_rules[:normal_price]

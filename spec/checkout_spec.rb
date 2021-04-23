@@ -33,16 +33,32 @@ describe CheckOut do
   }
 
   let (:single_product) { 'AAA' }
+  let (:mixed_products) { 'AAABBAACDCA' }
+  let (:zero_products) { '' }
 
   context "when the input is correct" do
-    it "returns the correct output" do
-      expect(price(single_product, simple_rules)).to eq(130)
+    context "and the input is a single product" do
+      it "returns the correct sum" do
+        expect(price(single_product, simple_rules)).to eq(130)
+      end
+    end
+
+    context "and the input is zero products" do
+      it "returns 0" do
+        expect(price(zero_products, simple_rules)).to eq(0)
+      end
+    end
+
+    context "and the input is mixed" do
+      it "returns the correct sum" do
+        expect(price(mixed_products, simple_rules)).to eq(360)
+      end
     end
   end
 
   context "when the rule includes an amount_offer equals to 0" do
     it "returns an error because of zero division" do
-      expect(CheckOut.new(zero_division).total).to raise_error(ZeroDivisionError)
+      expect{ CheckOut.new(zero_division) }.to raise_error(ZeroDivisionError, "The amount of the offer can't be 0")
     end
   end
 
