@@ -38,12 +38,12 @@ rules = [
   {product: 'B', normal_price: retail_price_b},
 ]
 ```
-**product**: name of the product.
-**normal_price**: price for one unit of the product.
-**amount_offer**: quantity of products to get offer.
-**price_offer**: price of the previosly mentioned products with offer.
+**product**: name of the product.  
+**normal_price**: price for one unit of the product.  
+**amount_offer**: quantity of products to get offer.  
+**price_offer**: price of the previosly mentioned products with offer.  
 
-The three types of prices mentioned in the Kata could be written like this:
+The three types of prices mentioned in the Kata could be written like this:  
 *"apples cost 50 cents"*  
 {product: 'Apple', normal_price: 0.5},  
   
@@ -67,6 +67,7 @@ After calculating this, we can calculate the amount of products in offer. Knowin
 
 ### InputValidator
 This class condenses all of the validations we need to do to avoid bad inputs from the user. It's divided in the validations on the products (to be sure that the product exists) and the rules validations.  
+  
 The rules validations are looking for non-numeric values, non-positive values and different types of numbers to raise errors.
 ## Other Considerations
 * The document mentioned the possibility of having different formats for the pricing rules. The decision of using a hash is related to the possible use of JSON to allow the app to receive any type of structure translated into a JSON object (easily convertible to a hash). Adding a filter before initializing the rules will be enough to use any possible format.
@@ -74,9 +75,9 @@ The rules validations are looking for non-numeric values, non-positive values an
 * The supermarket could decide to have different rules for the same product, for example:
 -One apple, 50 cents  
 -Three apples, $1.3  
--Buy two apples and you'll get one free  
+-Buy two apples and you'll get one free    
 In that case, it will be better to buy 2 apples and get the third for free. To implement that, we'll need to change the calculate_price_with_offer with this logic:  
 If the person is buying 6 apples, we calculate the dividers of the apples (1,2,3,6) and calculate the prices for each possible path creating a graph of the possible prices. The node 6 will be connected to the node 3 (multiplying by 2), the node 3 will be connected to two prices: $1.3 and price_of(2). In the end this problem will be a subset of Dijkstra's algorithm.
 * If we need to add new rules, like getting a free pear for every two apples we could modify the format of the rules to easily:  
-{product: 'Apple', normal_price: 0.5, amount_offer: 2, other_product: 'Pear', other_product_amount: 1}  
+{product: 'Apple', normal_price: 0.5, amount_offer: 2, other_product: 'Pear', other_product_amount: 1}    
 After that, we could change the validations to allow the new fields and make small changes to the calculator to allow different products.
