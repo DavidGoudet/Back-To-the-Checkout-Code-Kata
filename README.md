@@ -81,3 +81,4 @@ If the person is buying 6 apples, we calculate the dividers of the apples (1,2,3
 * If we need to add new rules, like getting a free pear for every two apples we could modify the format of the rules to easily:  
 {product: 'Apple', normal_price: 0.5, amount_offer: 2, other_product: 'Pear', other_product_amount: 1}    
 After that, we could change the validations to allow the new fields and make small changes to the calculator to allow different products.
+* Adding specs for every single class will be necessary for a real-life environment that's subject to constant change.
