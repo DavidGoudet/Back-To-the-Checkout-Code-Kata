@@ -19,15 +19,16 @@ class InputValidator
   end
 
   def validate_rules
+    raise ArgumentError, "The list of rules should be an array of hashes" unless @rules.kind_of?(Array)
     @rules.each do |rule|
       validate_offers(rule) if rule.key?(:amount_offer)
       raise ArgumentError, "The value of the normal price should be a non-negative integer" unless rule[:normal_price].is_a?(Integer) && !rule[:normal_price].negative?
-      raise ArgumentError, "The normal price should be a number" unless rule[:normal_price].is_a?(Integer)
     end
   end
 
   def validate_offers(rule)
     raise ArgumentError, "The amounts and prices should be numbers" unless rule[:amount_offer].is_a?(Integer) && rule[:price_offer].is_a?(Integer)
     raise ArgumentError, "The amount of the offer should be a number greater than 0" unless rule[:amount_offer].positive?
+    raise ArgumentError, "The value of the price_offer should be a non-negative integer" if rule[:price_offer].negative?
   end
 end
