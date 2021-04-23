@@ -7,10 +7,10 @@ class CheckOut
   attr_reader :total
 
   def initialize(rules)
-    @validator = InputValidator.new(rules)
     @rules = rules
     @total = 0
     @products = {}
+    @validator = InputValidator.new(rules)
   end
 
   def scan(product)

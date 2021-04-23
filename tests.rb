@@ -3,6 +3,12 @@ require 'test/unit'
 require_relative 'check_out.rb'
 
 class TestPrice < Test::Unit::TestCase
+  RULES = [
+    {product: 'A', normal_price: 50, amount_offer: 3, price_offer: 130},
+    {product: 'B', normal_price: 30, amount_offer: 2, price_offer: 45},
+    {product: 'C', normal_price: 20},
+    {product: 'D', normal_price: 15},
+  ]
 
   def price(goods)
     co = CheckOut.new(RULES)

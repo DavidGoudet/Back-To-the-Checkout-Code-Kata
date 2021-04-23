@@ -19,12 +19,6 @@ describe CheckOut do
     ]
   }
 
-  let (:no_price_offer) { 
-    [
-      {product: 'A', normal_price: 50, amount_offer: 2},
-    ]
-  }
-
   let (:single_product) { 'AAA' }
   let (:mixed_products) { 'AAABBAACDCA' }
   let (:zero_products) { '' }
