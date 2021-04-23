@@ -3,7 +3,7 @@ require_relative 'product_calculator'
 
 class InputValidator
   def initialize(rules)
-    @rules = rules    
+    @rules = rules
   end
 
   def validate(product)
@@ -19,10 +19,12 @@ class InputValidator
   end
 
   def validate_rules
-    raise ArgumentError, "The list of rules should be an array of hashes" unless @rules.kind_of?(Array) && @rules.first.kind_of?(Hash)
+    raise ArgumentError, "The list of rules should be an array of hashes" unless @rules.is_a?(Array) && @rules.first.is_a?(Hash)
+
     @rules.each do |rule|
       validate_offers(rule) if rule.key?(:amount_offer)
-      raise ArgumentError, "The value of the normal price should be a non-negative number" unless rule[:normal_price].is_a?(Numeric) && !rule[:normal_price].negative?
+      is_numeric_and_non_negative = rule[:normal_price].is_a?(Numeric) && !rule[:normal_price].negative?
+      raise ArgumentError, "The value of the normal price should be a non-negative number" unless is_numeric_and_non_negative
     end
   end
 

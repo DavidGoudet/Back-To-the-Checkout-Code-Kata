@@ -3,7 +3,6 @@ require_relative 'product_calculator'
 require_relative 'input_validator'
 
 class CheckOut
-
   attr_reader :total
 
   def initialize(rules)

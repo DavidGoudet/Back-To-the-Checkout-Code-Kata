@@ -7,16 +7,16 @@ class ProductCalculator
 
   def calculate_price(product, amount)
     product_rules = product_rules_extractor(product)
-    
+
     if product_rules.key?(:amount_offer) && product_rules.key?(:price_offer)
       calculate_price_with_offer(product_rules, amount)
     else
-      return amount * product_rules[:normal_price]
+      amount * product_rules[:normal_price]
     end
   end
 
   def product_rules_extractor(product)
-    @rules.find {|rule| rule[:product] == product }
+    @rules.find { |rule| rule[:product] == product }
   end
 
   private
