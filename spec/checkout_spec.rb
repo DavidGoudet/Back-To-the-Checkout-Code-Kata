@@ -20,8 +20,10 @@ describe CheckOut do
   }
 
   let (:single_product) { 'AAA' }
+  let (:single_product_multiple) { 'AAAAA' }
   let (:mixed_products) { 'AAABBAACDCA' }
   let (:zero_products) { '' }
+
 
   context "when the input is correct" do
     context "and the input is a single product" do
@@ -41,6 +43,22 @@ describe CheckOut do
         expect(price(mixed_products, simple_rules)).to eq(360)
       end
     end
+
+    context "and the input is a decimal" do
+      it "returns the correct sum" do
+        single_rule[:normal_price] = 50.23
+        single_rule[:price_offer] = 129.4
+        expect(price(single_product_multiple, [single_rule])).to eq(229.86)
+      end
+    end
+
+    context "when there are free products" do
+      it "returns the right price" do
+        #Buy two As, get one free
+        single_rule[:price_offer] = 100
+        expect(price(single_product_multiple, [single_rule])).to eq(200)
+      end
+    end
   end
 
   context "when the rule includes an amount_offer equals to 0" do
@@ -53,7 +71,7 @@ describe CheckOut do
   context "when the rule includes a string instead of a number" do
     it "returns an ArgumentError" do
       single_rule[:normal_price] = 'string'
-      expect{ price(mixed_products, [single_rule]) }.to raise_error(ArgumentError, "The value of the normal price should be a non-negative integer")
+      expect{ price(mixed_products, [single_rule]) }.to raise_error(ArgumentError, "The value of the normal price should be a non-negative number")
     end
   end
 
@@ -67,14 +85,14 @@ describe CheckOut do
   context "when there is no normal price" do
     it "returns an ArgumentError" do
       single_rule.tap { |sr| sr.delete(:normal_price) }
-      expect{ price(mixed_products, [single_rule]) }.to raise_error(ArgumentError, "The value of the normal price should be a non-negative integer")
+      expect{ price(mixed_products, [single_rule]) }.to raise_error(ArgumentError, "The value of the normal price should be a non-negative number")
     end
   end
 
   context "when there's amount offer without price offer" do
     it "returns an ArgumentError" do
       single_rule.tap { |sr| sr.delete(:price_offer) }
-      expect{ price(mixed_products, [single_rule]) }.to raise_error(ArgumentError, "The amounts and prices should be numbers")
+      expect{ price(mixed_products, [single_rule]) }.to raise_error(ArgumentError, "The price should be a number")
     end
   end
 end
