@@ -11,6 +11,7 @@ class CheckOut
     @total = 0
     @products = {}
     @validator = InputValidator.new(rules)
+    @calculator = ProductCalculator.new(@rules)
   end
 
   def scan(product)
@@ -24,7 +25,7 @@ class CheckOut
   def update_total
     @total = 0
     @products.each do |product, amount|
-      @total += ProductCalculator.new(@rules, product, amount).calculate_price
+      @total += @calculator.calculate_price(product, amount)
     end
   end
 end

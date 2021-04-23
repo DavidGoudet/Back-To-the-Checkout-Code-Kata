@@ -14,7 +14,7 @@ class InputValidator
   private
 
   def validate_product(product)
-    product_rules = ProductCalculator.new(@rules, product).product_rules_extractor
+    product_rules = ProductCalculator.new(@rules).product_rules_extractor(product)
     raise IndexError, "The product doesn't exist" if product_rules.nil?
   end
 
